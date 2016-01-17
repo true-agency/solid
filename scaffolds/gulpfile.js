@@ -1,11 +1,12 @@
-var solid = require('./solid/assets/build/solid-gulp');
+var solidPath = __dirname + '/vendor/trueagency/solid/';
+var solid = require(solidPath + 'assets/build/solid-gulp');
 
 //
 // Configure solid
 // ----------------------
 solid
     .configure()
-    .from(__dirname + '/solid/assets/build/configs/laravel.js')
+    .from(solidPath + 'assets/build/configs/laravel.js')
     // Copy this from build/configs/sample.js
     .from(__dirname + '/gulp-build/config.js')
 
