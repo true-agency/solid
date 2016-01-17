@@ -1,0 +1,55 @@
+//
+// Mixins file
+//
+// Space for any custom mixins used by this application
+//
+
+/**
+ * Create absolute positioned element
+ * that fills its parents
+ */
+.absolute-fill() 
+{
+    position: absolute;
+    width: 100%; height: 100%;
+}
+
+// Universal transform
+// --------------------------------------------------
+.transform(@transform) 
+{
+  -webkit-transform: @transform;
+      -ms-transform: @transform; // IE9+
+          transform: @transform;
+}
+
+.borderRadius(@radius) 
+{
+            border-radius: @radius;
+    -webkit-border-radius: @radius;
+}
+
+.border-radius(@radius) {
+           border-radius: @radius;
+    -webkit-border-radius: @radius;
+}
+
+.make-fa-icon(@icon) {
+    .fa-icon();
+    content: @icon;
+}
+
+
+.noSelect()
+{
+  -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+}
+
+.btn-reset()
+{
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}

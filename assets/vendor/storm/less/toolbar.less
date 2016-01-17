@@ -1,0 +1,177 @@
+//
+// Dependencies
+// --------------------------------------------------
+
+// @import "global.less";
+// @import "icon.less";
+// @import "button.less";
+
+//
+// Toolbars
+// --------------------------------------------------
+
+@color-scroll-indicator:                 #bbbbbb;
+@color-toolbar-editor-bg:                #dddddd;
+@color-toolbar-editor-btn-color:         #404040;
+@color-toolbar-editor-btn-bg-hover:      #999999;
+@color-toolbar-editor-btn-bg-active:     #404040;
+@color-toolbar-editor-btn-color-hover:   #ffffff;
+
+//
+// Toolbars
+// --------------------------------------------------
+
+.control-toolbar {
+    font-size: 0; // Do not rely on the default spacing between inline-block elements
+    padding: 0 0 20px 0;
+    position: relative;
+    .horizontal-scroll-indicators(@color-scroll-indicator);
+
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    &:before {
+        left: -10px;
+    }
+
+    &:after {
+        right: -8px;
+    }
+
+    .toolbar-item {
+        position: relative;
+        white-space: nowrap;
+        display: table-cell;
+        vertical-align: top;
+        padding-right: 20px;
+
+        &:last-child,
+        &.last {
+            padding-right: 0;
+        }
+
+        .horizontal-scroll-indicators(@color-scroll-indicator);
+
+        &:before { left: -10px; }
+        &:after { right: 6px; }
+
+        .btn, .btn-group, .dropdown {
+            white-space: nowrap;
+            float: none;
+            display: inline-block;
+            margin-right:  10px;
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &.standalone {
+                margin-right: 15px;
+            }
+        }
+
+        .btn-group {
+            > .btn, > .dropdown {
+                margin-right: 0;
+                display: inline-block;
+                float: none;
+            }
+
+            .dropdown {
+                > .btn {
+                    margin-right: 0;
+                    .border-right-radius(0);
+                }
+
+                &.last > .btn {
+                    .border-right-radius(@border-radius-base) !important;
+                }
+            }
+        }
+    }
+
+    input.form-control[type=text] {
+        height: auto;
+        padding: 8px 10px;
+    }
+
+    &.toolbar-padded {
+        padding: 20px;
+    }
+}
+
+[data-control=toolbar] {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+}
+
+//
+// Editor toolbar
+// --------------------------------------------------
+
+.control-toolbar.editor-toolbar {
+    padding: 0;
+    background: @color-toolbar-editor-bg;
+    .border-bottom-radius(0);
+
+    .toolbar-item {
+        .btn, .btn-group, .dropdown {
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn {
+            text-align: center;
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+            zoom: 1;
+            color: @color-toolbar-editor-btn-color;
+            background: transparent;
+            .user-select(none);
+
+            &:before {
+                font-size: 14px !important;
+            }
+
+            &:hover {
+                outline: none;
+                background-color: @color-toolbar-editor-btn-bg-hover;
+                color: @color-toolbar-editor-btn-color-hover;
+            }
+            &.active,
+            &:active {
+                outline: none;
+                background-color: @color-toolbar-editor-btn-bg-active;
+                color: @color-toolbar-editor-btn-color-hover;
+            }
+            &.disabled,
+            &[disabled] {
+                opacity: .3;
+            }
+        }
+
+        .dropdown.open {
+            .btn {
+                background-color: @color-toolbar-editor-btn-bg-active;
+                color: @color-toolbar-editor-btn-color-hover;
+            }
+        }
+
+        .btn[class^="oc-icon-"],
+        .btn[class*=" oc-icon-"] {
+            &:before {
+                margin: 0;
+            }
+        }
+
+        .btn.oc-autumn-button {
+            color: #c03f31;
+
+            &:hover {
+                color: white !important;
+            }
+        }
+    }
+}

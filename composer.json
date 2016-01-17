@@ -1,0 +1,15 @@
+{
+    "name": "trueagency/solid",
+    "description": "Solid Framework, by True.",
+    "keywords": ["framework", "solid", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+    },
+    "autoload": {
+        "psr-4": {
+            "Solid\\": "src/"
+        }
+    }
+}
