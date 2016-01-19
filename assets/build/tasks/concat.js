@@ -5,7 +5,8 @@ var BaseTask = require('./base'),
     uglify        = require('gulp-uglify'),
     concat        = require('gulp-concat'),
     notify        = require('gulp-notify'),
-    gulpif        = require('gulp-if'),
+    sourcemaps = require('gulp-sourcemaps'),
+    gulpif     = require('gulp-if'),
     
     lib      = require('./../lib');
 
@@ -17,10 +18,28 @@ var SolidConcat = function (key, options, config) {
     this._options = options
     this._as = null
     this._to = null
+    this._uglifyOptions = {}
+    this._useSourcemaps = false;
 }
 
 SolidConcat.prototype = new BaseTask;
 SolidConcat.prototype.constructor = SolidConcat
+
+SolidConcat.prototype.beautify = function () {
+    this._uglifyOptions = {
+        mangle: false,
+        compress: false,
+        output: {
+            beautify: true
+        }
+    }
+    return this
+}
+
+SolidConcat.prototype.sourcemaps = function () {
+    this._useSourcemaps = true
+    return this
+}
 
 SolidConcat.prototype.to = function(to) {
     var self = this
@@ -29,8 +48,10 @@ SolidConcat.prototype.to = function(to) {
     return gulp.task(self._key, function () {
         return gulp.src(lib.pathKey(self._key, self._config))
                 .pipe(plumber({errorHandler: lib.onError}))
-                .pipe(concat(self._as))
-                .pipe(uglify())
+                .pipe(gulpif(self._useSourcemaps, sourcemaps.init()))
+                    .pipe(concat(self._as))
+                    .pipe(uglify(self._uglifyOptions))
+                .pipe(gulpif(self._useSourcemaps, sourcemaps.write()))
                 .pipe(gulp.dest( self._config.asset_path + self._to ))
                 .pipe(notify({ message: self._message }));
     });
