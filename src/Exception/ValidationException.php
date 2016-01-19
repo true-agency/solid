@@ -63,8 +63,13 @@ class ValidationException extends Exception
 
         $errors = new MessageBag;
 
-        foreach ($fields as $field => $message)
+        foreach ($fields as $field => $message) {
+            // If array, only the first mesage, 
+            if (is_array($message)) {
+                $message = $message[0];
+            }
             $errors->add($field, $message);
+        }
 
         return $errors;
     }

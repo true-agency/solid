@@ -1,0 +1,10 @@
+# VM
+Homestead.yaml
+Homestead.json
+
+# Local configuration
+.env
+
+# IDE Specifics
+.idea
+.phpintel
