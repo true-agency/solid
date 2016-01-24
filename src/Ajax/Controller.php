@@ -1,6 +1,6 @@
 <?php
 
-namespace Solid\Ajax\Controllers;
+namespace Solid\Ajax;
 
 use Illuminate\Routing\Controller as BaseController;
 
