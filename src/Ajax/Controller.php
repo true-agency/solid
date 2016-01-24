@@ -4,7 +4,7 @@ namespace Solid\Ajax;
 
 use Illuminate\Routing\Controller as BaseController;
 
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     /**
      * Execute an action on the controller.

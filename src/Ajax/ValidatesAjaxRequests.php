@@ -11,12 +11,6 @@ use Solid\Exception\ValidationException;
 
 trait ValidatesAjaxRequests
 {
-    /**
-     * The default error bag.
-     *
-     * @var string
-     */
-    protected $validatesRequestErrorBag;
 
     /**
      * Validate the given request with the given rules.
