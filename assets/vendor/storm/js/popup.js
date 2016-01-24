@@ -201,6 +201,7 @@
         if (this.firstDiv.length > 0)
             this.firstDiv.data('oc.popup', this)
 
+        var form = this.$content.find('form:first')
         if (form.length) {
             var $firstField = form.find('input[type="text"], input[type="number"], input[type="email"], textarea').first()
             window.setTimeout(function () {
