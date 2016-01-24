@@ -27,12 +27,12 @@ trait ValidatesAjaxRequests
      * @param  array  $customAttributes
      * @return void
      */
-    public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
+    public function validateAjax(Request $request, array $rules, array $messages = [], array $customAttributes = [])
     {
-        $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
+        $validator = $this->getAjaxValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
 
         if ($validator->fails()) {
-            $this->throwValidationException($request, $validator);
+            $this->throwAjaxValidationException($request, $validator);
         }
     }
 
@@ -45,7 +45,7 @@ trait ValidatesAjaxRequests
      *
      * @throws \Illuminate\Foundation\Validation\ValidationException
      */
-    protected function throwValidationException(Request $request, $validator)
+    protected function throwAjaxValidationException(Request $request, $validator)
     {
         throw new ValidationException($validator, $this->buildFailedValidationResponse(
             $request, $this->formatValidationErrors($validator)
@@ -57,7 +57,7 @@ trait ValidatesAjaxRequests
      *
      * @return \Illuminate\Contracts\Validation\Factory
      */
-    protected function getValidationFactory()
+    protected function getAjaxValidationFactory()
     {
         return app(Factory::class);
     }
