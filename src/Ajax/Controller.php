@@ -44,8 +44,10 @@ abstract class Controller extends BaseController
                     $result[$key] = $value->render();
                 }
             }
+            return $this->ajaxResponse($result);
         }
-        return $this->ajaxResponse($result);
+
+        return $result;
     }
 
     /**
