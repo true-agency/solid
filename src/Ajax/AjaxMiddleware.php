@@ -82,8 +82,7 @@ class AjaxMiddleware
          * No redirect is used, look for any flash messages
          */
         elseif (app('solid.flash')->check()) {
-            // $responseContents['#layout-flash-messages'] = $this->makeLayoutPartial('flash_messages');
-            $responseContents['#layout-flash-messages'] = view('shared.flash-message')->render();
+            $responseContents['#layout-flash-messages'] = view('shared.solid-flash-message')->render();
         }
 
         return Response::make()->setContent($responseContents);

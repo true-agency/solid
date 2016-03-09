@@ -32,6 +32,8 @@ Firstly, you'll need to set up Laravel to allow ajax registration
     ```
 - In your middleware, add the following middleware to your stack:
     `\Solid\Ajax\AjaxMiddleware::class`
+- Have your controller extend from `\Solid\Ajax\Controller` to allow Ajax based response
+    
 
 
 And then, use the modified October `framework.js` file to allow url as handler.

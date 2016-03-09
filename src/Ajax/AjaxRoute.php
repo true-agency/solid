@@ -24,7 +24,9 @@ class AjaxRoute
 
     public function route($as, $action)
     {
-        $this->router->post($this->urlPrefix . Str::slug($as), [
+        $actionName = explode('@', $action)[1];
+
+        $this->router->post($this->urlPrefix . $actionName, [
             'uses' => $action,
             'as'   => $as
         ]);
