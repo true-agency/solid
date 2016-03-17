@@ -2,12 +2,12 @@ var BaseTask = require('./base'),
     gulp     = require('gulp'),
     plumber       = require('gulp-plumber'),
     autoprefixer  = require('gulp-autoprefixer'),
-    minifycss     = require('gulp-minify-css'),
+    minifycss     = require('gulp-clean-css'),
     concat        = require('gulp-concat'),
     notify        = require('gulp-notify'),
     livereload    = require('gulp-livereload'),
     gulpif        = require('gulp-if'),
-    
+
     lib      = require('./../lib');
 
 var SolidCss = function (key, options, config) {

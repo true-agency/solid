@@ -4,6 +4,8 @@ use App;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as BaseExceptionHandler;
 use Illuminate\Foundation\Validation\ValidationException as LaravelValidationException;
+use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Solid\Ajax\AjaxException;
 use Solid\Exception\ValidationException as ValidationException;
 use Solid\Facades\Flash;
@@ -24,9 +26,27 @@ class ExceptionHandler extends BaseExceptionHandler
      */
     public function report(Exception $e)
     {
+        foreach ($this->dontReport as $type) {
+            if ($e instanceof $type) {
+                return parent::report($e);
+            }
+        }
+
+        if (app()->bound('bugsnag')) {
+            app('bugsnag')->notifyException($e, null, "error");
+        }
+
         parent::report($e);
     }
 
+    /**
+     * Render the exception response
+     *
+     * @param  Request    $request
+     * @param  \Exception $e      
+     *
+     * @return mixed
+     */
     public function render($request, \Exception $e)
     {
         if (app('ajax.helper')->isFrameworkAjax()) {
@@ -39,6 +59,14 @@ class ExceptionHandler extends BaseExceptionHandler
         return parent::render($request, $e);
     }
 
+    /**
+     * Handle custom ajax response
+     *
+     * @param  [type] $request [description]
+     * @param  [type] $e       [description]
+     *
+     * @return [type]          [description]
+     */
     protected function handleAjaxException($request, $e)
     {
         $response = null;
