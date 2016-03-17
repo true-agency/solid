@@ -41,9 +41,7 @@ trait ValidatesAjaxRequests
      */
     protected function throwAjaxValidationException(Request $request, $validator)
     {
-        throw new ValidationException($validator, $this->buildFailedValidationResponse(
-            $request, $this->formatValidationErrors($validator)
-        ));
+        throw new ValidationException($validator);
     }
 
     /**
@@ -53,7 +51,7 @@ trait ValidatesAjaxRequests
      */
     protected function getAjaxValidationFactory()
     {
-        return app(Factory::class);
+        return app()->make('validator');
     }
 
 }
