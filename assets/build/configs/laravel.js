@@ -29,6 +29,7 @@ var config = {
             basepath + 'vendor/select2/js/select2.full.js',
             basepath + 'vendor/dropzone/js/dropzone.js',
             basepath + 'vendor/mousewheel/js/mousewheel.js',
+            basepath + 'vendor/jquery-sortable/js/jquery.sortable.js',
 
             // AJAX framework
             // @link http://octobercms.com
@@ -48,6 +49,7 @@ var config = {
             basepath + 'vendor/storm/js/select.js',
             basepath + 'vendor/storm/js/fileupload.js',
             basepath + 'vendor/storm/js/drag.scroll.js',
+            basepath + 'vendor/storm/js/drag.sort.js',
             basepath + 'vendor/storm/js/toolbar.js',
 
             basepath + "vendor/*/js/*.js",
