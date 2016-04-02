@@ -116,10 +116,28 @@ Some short explanations on custom Solid Providers:
 
 Enable October AJAX framework to laravel. You will need to include October's javascript framework to use this.
 
+There are few components here to include as described below.
+
+#### Include Javascript framework
+
+These are already available as part of Solid Gulp tasks (october and laravel version).
+
+#### Extend from `Solid/Ajax/Controller`
+
+Your controller should extend from Solid's controller to be able to response to Ajax request.
+
+#### Add Exception Handler
+
 Your project ExceptionHandler should extend from `Solid\Ajax\ExceptionHandler`, at:
 `app/Exceptions/Handler.php`
 
 > `'Ajax'      => Solid\Facades\Ajax::class,`
+
+#### Add Middleware
+
+Add  Solid's Ajax Middleware to intercept and correctly route Ajax requests.
+
+> `\Solid\Ajax\AjaxMiddleware::class,`
 
 ### Solid\Flash\FlashServiceProvider
 
