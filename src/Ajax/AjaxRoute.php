@@ -22,25 +22,73 @@ class AjaxRoute
         $this->app = $app;
     }
 
-    public function route($as, $action)
+    /**
+     * Register an ajax route
+     *
+     * @param  string $as     Route name
+     * @param  string $action Controller@method signature
+     * @param  array  $params Route parameters
+     *
+     * @return void
+     */
+    public function route($as, $action, $params = [])
     {
         $actionName = explode('@', $action)[1];
 
-        $this->router->post($this->urlPrefix . $actionName, [
+        $url = $this->buildUrl($actionName, $params);
+
+        $this->router->post($url, [
             'uses' => $action,
             'as'   => $as
         ]);
     }
 
+    /**
+     * Register routes configuration
+     *
+     * @param  $array
+     *
+     * @return void
+     */
     public function routes($array)
     {
         if (!is_array($array)) {
             throw new \Exception("Invalid type given", 1);
         }
 
-        foreach ($array as $key => $value) {
-            $this->route($key, $value);
+        foreach ($array as $routeName => $value) {
+            $params = [];
+            if (!is_array ($value)) {
+                $uses = $value;
+            } else {
+                foreach ($value as $key => $routeConfig) {
+                    if (is_numeric($key)) {
+                        $uses = $routeConfig;
+                    }
+                    if ($key === 'params') {
+                        $params = $routeConfig;
+                    }
+                }
+            }
+            $this->route($routeName, $uses, $params);
         }
+    }
+
+    /**
+     * Build ajax url with additional parameters
+     *
+     * @param  string $action 
+     * @param  array  $params 
+     *
+     * @return string
+     */
+    protected function buildUrl($action, $params)
+    {
+        $url = $this->urlPrefix . $action;
+        foreach ($params as $param) {
+            $url .= '/'. $param;
+        }
+        return $url;
     }
 
 }
