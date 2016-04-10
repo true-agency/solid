@@ -51,9 +51,15 @@
              * render using flash message
              */
             $(window).on('ajaxError', function (event, context, status, jqxhr) {
+                var data = {}
+                if (context.responseJSON) {
+                    data = context;
+                } else if (jqxhr.responseJSON) {
+                    data = jqxhr;
+                }
 
-                if (context.responseJSON['X_OCTOBER_ERROR_FIELDS']
-                        && context.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']) {
+                if (data.responseJSON['X_OCTOBER_ERROR_FIELDS']
+                        && data.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']) {
 
                     // Hide october's backend
                     $('.flash-message.error')
@@ -62,7 +68,7 @@
                     event.preventDefault()
 
                     $.popup({
-                        content: context.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']
+                        content: data.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']
                     })
                 }
 
