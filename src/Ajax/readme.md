@@ -1,6 +1,8 @@
 ## Ajax Framework
 
-This framework is borrowed from OctoberCMS and modified to work with standard Laravel project. Credit to OctoberCMS team. http://octobercms.com
+This framework is borrowed from OctoberCMS (http://octobercms.com) and modified to work with standard Laravel project. 
+
+Credit goes to OctoberCMS team (http://octobercms.com)
 
 ### How to setup
 
@@ -34,14 +36,18 @@ Firstly, you'll need to set up Laravel to allow ajax registration
     `\Solid\Ajax\AjaxMiddleware::class`
 - Have your controller extend from `\Solid\Ajax\Controller` to allow Ajax based response
     
+#### Include Javascript framework
 
+These are already available as part of Solid Gulp tasks (october and laravel version).
+Make sure to use October `framework.js` (customised) file to allow url as handler.
 
-And then, use the modified October `framework.js` file to allow url as handler.
+For CSRF token verification, ensure meta tag is added to your head:
+
+`<meta name="csrf-token" content="{{ csrf_token() }}">`
 
 ### How to use
 
-Use `response()->json()` to return data to ajax framework. If you're returning partial, follow OctoberCMS convention: `.selector => view('partial.name')->render()`.
-
-For redirection, simply use `redirect()` as usual.
-
-That should be it.
+Everything should behave the same way as normal Laravel, on ajax-red routes, your controller can:
+- return `view()` to return ajax-ed view content
+- return array to return json output
+- flash messages, which automatically show alert in front end (can return empty response)

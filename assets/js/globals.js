@@ -10,6 +10,8 @@
 
             self.attachGlobalConfirmHandler();
 
+            self.addCsrf()
+
             $(document).trigger('render');
         },
 
@@ -22,6 +24,20 @@
             event.preventDefault();
         },
 
+        addCsrf: function () {
+            /*
+             * Ensure the CSRF token is added to all AJAX requests.
+             */
+            $.ajaxPrefilter(function(options) {
+                var token = $('meta[name="csrf-token"]').attr('content')
+
+                if (token) {
+                    if (!options.headers) options.headers = {}
+                    options.headers['X-CSRF-TOKEN'] = token
+                }
+            })  
+        },
+
         /**
          * Various global AJAX form error handler.
          * These hooks into Global october framework.js event
@@ -29,6 +45,29 @@
          * @return void
          */
         attachFormAjaxErrorHandler: function () {
+
+            /**
+             * When global error message given by AJAX handler,
+             * render using flash message
+             */
+            $(window).on('ajaxError', function (event, context, status, jqxhr) {
+
+                if (context.responseJSON['X_OCTOBER_ERROR_FIELDS']
+                        && context.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']) {
+
+                    // Hide october's backend
+                    $('.flash-message.error')
+                        .hide()
+
+                    event.preventDefault()
+
+                    $.popup({
+                        content: context.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']
+                    })
+                }
+
+            })
+
             /**
              * When global error message given by AJAX handler, 
              * render using flash message

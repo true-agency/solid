@@ -114,6 +114,8 @@ Some short explanations on custom Solid Providers:
 
 ### Solid\Ajax\AjaxServiceProvider
 
+Refer to Ajax readme file in src/Ajax
+
 Enable October AJAX framework to laravel. You will need to include October's javascript framework to use this.
 
 There are few components here to include as described below.
