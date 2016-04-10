@@ -97,6 +97,14 @@ class ExceptionHandler extends BaseExceptionHandler
                 $e->getMessage()
             );
 
+        // Ajax error message
+        } else if ($e instanceof AjaxException) {
+
+            $responseContents = array_merge_recursive($responseContents, $e->getContents());
+            $responseContents['X_OCTOBER_ERROR_MESSAGE'] = $responseContents['result'];
+            // Smart error code
+            $response = response()->json($responseContents, 406);
+            
         // Runtime Errors
         } else if ($e instanceof \ErrorException) {
             
@@ -107,12 +115,13 @@ class ExceptionHandler extends BaseExceptionHandler
             $responseContents['X_OCTOBER_ERROR_MESSAGE'] = $message;
             $response = response()->json($responseContents, 406);
 
-        // Ajax error message
-        } else if ($e instanceof AjaxException) {
+        // Catch all
+        } else {
+            $message = env('APP_DEBUG', false)
+                ? '<strong>' . $e->getFile() . '</strong><br>' . $e->getMessage() . ' - Line: ' . $e->getLine()
+                : 'Whoops, we encountered an error.';
 
-            $responseContents = array_merge_recursive($responseContents, $e->getContents());
-            $responseContents['X_OCTOBER_ERROR_MESSAGE'] = $responseContents['result'];
-            // Smart error code
+            $responseContents['X_OCTOBER_ERROR_MESSAGE'] = $message;
             $response = response()->json($responseContents, 406);
         }
 
