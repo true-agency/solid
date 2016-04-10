@@ -33,9 +33,10 @@ class AjaxRoute
      */
     public function route($as, $action, $params = [])
     {
+        $controllerName = explode('@', $action)[0];
         $actionName = explode('@', $action)[1];
 
-        $url = $this->buildUrl($actionName, $params);
+        $url = $this->buildUrl($controllerName, $actionName, $params);
 
         $this->router->post($url, [
             'uses' => $action,
@@ -82,9 +83,11 @@ class AjaxRoute
      *
      * @return string
      */
-    protected function buildUrl($action, $params)
+    protected function buildUrl($controllerName, $action, $params)
     {
-        $url = $this->urlPrefix . $action;
+        $controllerName = str_replace('controller', '', strtolower(basename(str_replace('\\', '/', $controllerName))));
+
+        $url = $this->urlPrefix . $controllerName . '/' . $action;
         foreach ($params as $param) {
             $url .= '/'. $param;
         }
