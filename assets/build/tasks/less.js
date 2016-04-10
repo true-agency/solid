@@ -28,6 +28,7 @@ SolidLess.prototype.constructor = SolidLess
 SolidLess.prototype.to = function(to) {
     var self = this
     this._to = to
+    var isLocal = this._config.isLocal
 
     gulp.task(self._key, function () {
         return gulp.src(lib.pathKey(self._key, self._config))
@@ -37,8 +38,8 @@ SolidLess.prototype.to = function(to) {
                         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 2'))
                         .pipe(minifycss())
                     .pipe(gulp.dest(self._config.asset_path + self._to))
-                    .pipe(gulpif(self._options.env === 'development', livereload()))
-                    .pipe(notify({ message: self._message }));
+                    .pipe(gulpif(isLocal, livereload()))
+                    .pipe(gulpif(isLocal, notify({ message: self._message })))
     });
 
     return this

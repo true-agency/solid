@@ -8,11 +8,10 @@ var TaskBase = function(key, options, config) {
  	this._config = config
  	this._as = null
  	this._to = null
- 	this._watch = false
+    this._watch = false
 }
 
 TaskBase.prototype.init = function () {
-	
 }
 
 TaskBase.prototype.as = function(as) {
@@ -21,6 +20,10 @@ TaskBase.prototype.as = function(as) {
 }
 
 TaskBase.prototype.watch = function () {
+    var isLocal = this._config.isLocal
+    if (!isLocal)
+        return this;
+
 	var watchFiles = lib.pathKey(this._key, this._config),
 		additionalFiles = lib.pathKey('watch.' + this._key, this._config);
 

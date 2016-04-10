@@ -62,9 +62,12 @@ var configurable = {
         return this
     },
 
-    config: {}
+    config: {
+        isLocal: !argv.production
+    }
 
-};
+}
+
 
 /**
  * Main gulp command

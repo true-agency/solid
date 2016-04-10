@@ -26,6 +26,7 @@ SolidCss.prototype.constructor = SolidCss
 SolidCss.prototype.to = function(to) {
     var self = this
     this._to = to
+    var isLocal = this._config.isLocal
 
     return gulp.task(self._key, function () {
         return gulp.src(lib.pathKey(self._key, self._config))
@@ -34,8 +35,8 @@ SolidCss.prototype.to = function(to) {
                 .pipe(concat(self._as))
                 .pipe(minifycss())
                 .pipe(gulp.dest( self._config.asset_path + self._to ))
-                .pipe(gulpif(self._options.env === 'development', livereload()))
-                .pipe(notify({ message: self._message }));
+                .pipe(gulpif(isLocal, livereload()))
+                .pipe(gulpif(isLocal, notify({ message: self._message })))
     });
 }
 

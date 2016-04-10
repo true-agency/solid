@@ -44,6 +44,7 @@ SolidConcat.prototype.sourcemaps = function () {
 SolidConcat.prototype.to = function(to) {
     var self = this
     this._to = to
+    var isLocal = this._config.isLocal
 
     return gulp.task(self._key, function () {
         return gulp.src(lib.pathKey(self._key, self._config))
@@ -53,7 +54,7 @@ SolidConcat.prototype.to = function(to) {
                     .pipe(uglify(self._uglifyOptions))
                 .pipe(gulpif(self._useSourcemaps, sourcemaps.write()))
                 .pipe(gulp.dest( self._config.asset_path + self._to ))
-                .pipe(notify({ message: self._message }));
+                .pipe(gulpif(isLocal, notify({ message: self._message })))
     });
 }
 
