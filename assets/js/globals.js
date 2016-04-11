@@ -58,6 +58,8 @@
                     data = jqxhr;
                 }
 
+                if (!data.responseJSON) return;
+
                 if (data.responseJSON['X_OCTOBER_ERROR_FIELDS']
                         && data.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']) {
 
