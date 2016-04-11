@@ -109,7 +109,7 @@ class ExceptionHandler extends BaseExceptionHandler
         } else if ($e instanceof \ErrorException) {
             
             $message = env('APP_DEBUG', false)
-                ? '<strong>' . $e->getFile() . '</strong><br>' . $e->getMessage() . ' - Line: ' . $e->getLine()
+                ? ajax_dump($e)
                 : 'Whoops, we encountered an error.';
 
             $responseContents['X_OCTOBER_ERROR_MESSAGE'] = $message;
@@ -118,7 +118,7 @@ class ExceptionHandler extends BaseExceptionHandler
         // Catch all
         } else {
             $message = env('APP_DEBUG', false)
-                ? '<strong>' . $e->getFile() . '</strong><br>' . $e->getMessage() . ' - Line: ' . $e->getLine()
+                ? ajax_dump($e)
                 : 'Whoops, we encountered an error.';
 
             $responseContents['X_OCTOBER_ERROR_MESSAGE'] = $message;
