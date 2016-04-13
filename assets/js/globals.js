@@ -51,6 +51,11 @@
              * render using flash message
              */
             $(window).on('ajaxError', function (event, context, status, jqxhr) {
+                // Prevent double trigger on Document node
+                // @see http://www.w3schools.com/jsref/prop_node_nodetype.asp
+                if (event.target.nodeType === 9) 
+                    return
+
                 var data = {}
                 if (context.responseJSON) {
                     data = context;
@@ -58,9 +63,8 @@
                     data = jqxhr;
                 }
 
-                if (!data.responseJSON) return;
-
-                if (data.responseJSON['X_OCTOBER_ERROR_FIELDS']
+                if (data.responseJSON
+                        && data.responseJSON['X_OCTOBER_ERROR_FIELDS']
                         && data.responseJSON['X_OCTOBER_ERROR_FIELDS']['ajax_dump']) {
 
                     // Hide october's backend
