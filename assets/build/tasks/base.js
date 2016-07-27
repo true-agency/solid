@@ -11,6 +11,13 @@ var TaskBase = function(key, options, config) {
     this._watch = false
 }
 
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+        return this.substr(position, searchString.length) === searchString;
+    }
+}
+
 TaskBase.prototype.init = function () {
 }
 
